@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Antrian | TPQ-Al-Baidhowi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='gaya.css')}}" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top" style="background-color: #228b22">
+      <div class="container">
+        <a class="navbar-brand" href="/">Daftar Antrian Santri</a>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1>Daftar Antrian dan Status Santri</h1>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama Santri</th>
+                <th scope="col">TTL</th>
+                <th scope="col">Jenis Kelamin</th>
+                <th scope="col">Jadwal</th>
+                <th scope="col">Tahunan</th>
+                <th scope="col">Bulanan</th>
+                <th scope="col">Ayah</th>
+                <th scope="col">Pekerjaan</th>
+                <th scope="col">Ibu</th>
+                <th scope="col">Pekerjaan</th>
+                <th scope="col">Alamat</th>
+                <th scope="col">No Hp</th>
+                <th scope="col">Kartu Keluarga</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in santri %}
+              <tr>
+                <th scope="row">{{p.id}}</th>
+                <td>{{p.nama}}</td>
+                <td>{{p.ttl}}</td>
+                <td>{{p.jenis_kelamin}}</td>
+                <td>{{p.jadwal}}</td>
+                <td>{{p.tahunan}}</td>
+                <td>{{p.spp}}</td>
+                <td>{{p.ayah}}</td>
+                <td>{{p.job_ayah}}</td>
+                <td>{{p.ibu}}</td>
+                <td>{{p.job_ibu}}</td>
+                <td>{{p.alamat}}</td>
+                <td>{{p.no_hp}}</td>
+                <td><a href="/static/{{p.kartu_keluarga}}">Buka</a></td>
+                <!-- <td><img src="/static/{{p.kartu_keluarga}}" alt="" /></td> -->
+                <td>
+                  <a href="/{{p.id}}/update">Edit</a>
+                  <a href="/{{p.id}}/delete">Delete</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row"></div>
+    </div>
+  </body>
+</html>

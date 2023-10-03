@@ -1,0 +1,11 @@
+.jumbotron {
+  padding-top: 7rem;
+  background-color: #64d97a;
+}
+
+/* #carouselExampleAutoplaying {
+} */
+
+body {
+  min-height: 2100px;
+}

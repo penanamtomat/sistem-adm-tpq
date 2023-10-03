@@ -1,0 +1,10 @@
+dnspython
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
+pycparser
+PyJWT
+pymongo
+python-dotenv==0.18.0
+Werkzeug
