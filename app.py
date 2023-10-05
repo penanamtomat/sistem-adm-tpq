@@ -2,11 +2,13 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from werkzeug.utils import secure_filename
+from pymongo import MongoClient
 import os
-# import pymongo
-# from pymongo import MongoClient
 
 app = Flask(__name__)
+
+client = MongoClient("mongodb+srv://dimstomato:NqVsqFerfyv0aDt4@cluster09.keqktvo.mongodb.net/?retryWrites=true&w=majority")
+db = client.dbtpqbaidhowi
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TPQ Al-Baidhowi.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

@@ -1,8 +1,13 @@
+beautifulsoup4
+certifi
+charset-normalizer
+click
 dnspython
 Flask
 itsdangerous
 Jinja2
 MarkupSafe
+pymongo
 pycparser
 PyJWT
 pymongo
