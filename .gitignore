@@ -131,7 +131,7 @@ venv.bak/
 ngenewae/
 
 # static media file (upload)
-sist.adm.tpq/static/uploads/*
+SISTEM-ADM-TPQ/static/uploads/*
 
 # Spyder project settings
 .spyderproject
