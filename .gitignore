@@ -132,6 +132,7 @@ ngenewae/
 
 # static media file (upload)
 SISTEM-ADM-TPQ/static/uploads/*
+SISTEM-ADM-TPQ/static/img/*
 
 # Spyder project settings
 .spyderproject
