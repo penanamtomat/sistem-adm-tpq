@@ -7,7 +7,6 @@ Flask
 itsdangerous
 Jinja2
 MarkupSafe
-pymongo
 pycparser
 PyJWT
 pymongo
