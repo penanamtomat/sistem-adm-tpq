@@ -26,7 +26,7 @@ db_nosql = client[MONGODB_DB]
 db = SQLAlchemy(app)
 
 #instance migrate
-# migrate = Migrate(app, db)
+migrate = Migrate(app, db)
 
 #membuat variabel untuk menyimpan file
 UPLOAD_FOLDER = 'static/uploads'
