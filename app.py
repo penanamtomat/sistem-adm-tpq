@@ -9,11 +9,10 @@ from os.path import dirname, join
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 
-dotenv_path = join(dirname(__file__), '.env')
-load_dotenv(dotenv_path)
+load_dotenv()
 
-MONGODB_URI = os.environ.get("MONGODB_URI")
-MONGODB_DB = os.environ.get("MONGODB_DB")
+MONGODB_URI = os.getenv("MONGODB_URI")
+MONGODB_DB = os.getenv("MONGODB_DB")
 
 app = Flask(__name__)
 
