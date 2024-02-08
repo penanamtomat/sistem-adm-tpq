@@ -131,8 +131,8 @@ venv.bak/
 ngenewae/
 
 # static media file (upload)
-./static/uploads/*
-./static/img/*
+static/uploads
+static/img
 
 # Spyder project settings
 .spyderproject

@@ -1,24 +1,33 @@
 from flask import Flask, render_template, request, redirect
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+# from flask_sqlalchemy import SQLAlchemy
+# from flask_migrate import Migrate
 from werkzeug.utils import secure_filename
 from pymongo import MongoClient
-import os 
+
+import os
+from os.path import dirname, join
+from bson.objectid import ObjectId
+from dotenv import load_dotenv
+
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+MONGODB_URI = os.environ.get("MONGODB_URI")
+MONGODB_DB = os.environ.get("MONGODB_DB")
 
 app = Flask(__name__)
 
 client = MongoClient("mongodb+srv://dimstomato:K4Cyaxqiv7zdfUvi@cluster09.keqktvo.mongodb.net/?retryWrites=true&w=majority")
-
 db_nosql = client.dbtpq
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TPQ Al-Baidhowi.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TPQ Al-Baidhowi.db'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# instance sqlalchemy
-db = SQLAlchemy(app)
+# instance sqlalchemy   
+# db = SQLAlchemy(app)
 
 #instance migrate
-migrate = Migrate(app, db)
+# migrate = Migrate(app, db)
 
 #membuat variabel untuk menyimpan file
 UPLOAD_FOLDER = 'static/uploads'
@@ -26,24 +35,24 @@ ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-class Pendaftaran(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    nama = db.Column(db.String(50))
-    ttl = db.Column(db.String(50))
-    ayah = db.Column(db.String(50))
-    job_ayah = db.Column(db.String(50))
-    ibu = db.Column(db.String(50))
-    job_ibu = db.Column(db.String(50))
-    jenis_kelamin = db.Column(db.String(50))
-    jadwal = db.Column(db.String(50))
-    no_hp = db.Column(db.String(50))
-    alamat = db.Column(db.String(200))
-    tahunan = db.Column(db.String(50))
-    spp = db.Column(db.String(50))
-    kartu_keluarga = db.Column(db.String(50))
+# class Pendaftaran(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     nama = db.Column(db.String(50))
+#     ttl = db.Column(db.String(50))
+#     ayah = db.Column(db.String(50))
+#     job_ayah = db.Column(db.String(50))
+#     ibu = db.Column(db.String(50))
+#     job_ibu = db.Column(db.String(50))
+#     jenis_kelamin = db.Column(db.String(50))
+#     jadwal = db.Column(db.String(50))
+#     no_hp = db.Column(db.String(50))
+#     alamat = db.Column(db.String(200))
+#     tahunan = db.Column(db.String(50))
+#     spp = db.Column(db.String(50))
+#     kartu_keluarga = db.Column(db.String(50))
 
-    def __repr__(self):
-        return '<Pendaftaran %r>' % self.nama
+#     def __repr__(self):
+#         return '<Pendaftaran %r>' % self.nama
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -63,8 +72,8 @@ def dashboard():
 
 @app.route("/antrian")
 def antri():
-    list_santri = list(db_nosql.pendaftaran.find({}, {'_id': False}))
-    print(list_santri)
+    list_santri = list(db_nosql.pendaftaran.find())
+    print(list_santri[0])
     return render_template('antrian.html', santri = list_santri)
 
 @app.route("/pendaftaran")
@@ -174,9 +183,9 @@ def save_update(id):
 
 @app.route('/<id>/delete')
 def hapus_santri(id):
-    santri = Pendaftaran.query.filter_by(id=id).first()
-    db.session.delete(santri)
-    # db.session.commit()
+    db_nosql.pendaftaran.delete_one(
+        {'_id':ObjectId(id)}
+    )
 
     return redirect('/antrian')
 
