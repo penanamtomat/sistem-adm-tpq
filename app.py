@@ -8,6 +8,7 @@ import os
 app = Flask(__name__)
 
 client = MongoClient("mongodb+srv://dimstomato:K4Cyaxqiv7zdfUvi@cluster09.keqktvo.mongodb.net/?retryWrites=true&w=majority")
+
 db_nosql = client.dbtpq
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TPQ Al-Baidhowi.db'
@@ -62,7 +63,8 @@ def dashboard():
 
 @app.route("/antrian")
 def antri():
-    list_santri = list(db_nosql.find({},({"_id":False})))
+    list_santri = list(db_nosql.pendaftaran.find({}, {'_id': False}))
+    print(list_santri)
     return render_template('antrian.html', santri = list_santri)
 
 @app.route("/pendaftaran")
@@ -71,12 +73,6 @@ def daftar():
 
 @app.route("/pendaftaran/save", methods=['POST'])
 def pendaftaran_save():
-    # print(request.form.get('name'))
-    # print(request.form.get('ttl'))
-    # print(request.form.get('dadname'))
-    # print(request.form.get('dadkerja'))
-    # print(request.form.get('momname'))
-    # print(request.form.get('momkerja'))
 
     #menerima data dari request
     receive_nama = request.form.get('name')
@@ -154,32 +150,32 @@ def save_update(id):
     update_spp = request.form.get('spp')
     update_kartu_keluarga = request.files['kartukeluarga']
 
-    # santri = Pendaftaran.query.filter_by(id=id).first()
+    santri = Pendaftaran.query.filter_by(id=id).first()
 
     #mengubah data yang diambil dari database
-    # santri.nama = update_nama
-    # santri.ttl = update_ttl
-    # santri.ayah = update_dadname
-    # santri.job_ayah = update_dadkerja
-    # santri.ibu = update_momname
-    # santri.job_ibu = update_momkerja
-    # santri.jenis_kelamin = update_jenis_kelamin
-    # santri.jadwal = update_jadwal
-    # santri.no_hp = update_no_hp
-    # santri.alamat = update_alamat
-    # santri.tahunan = update_tahunan
-    # santri.spp = update_spp
-    # santri.kartu_keluarga = 'uploads/' + update_kartu_keluarga.filename
+    santri.nama = update_nama
+    santri.ttl = update_ttl
+    santri.ayah = update_dadname
+    santri.job_ayah = update_dadkerja
+    santri.ibu = update_momname
+    santri.job_ibu = update_momkerja
+    santri.jenis_kelamin = update_jenis_kelamin
+    santri.jadwal = update_jadwal
+    santri.no_hp = update_no_hp
+    santri.alamat = update_alamat
+    santri.tahunan = update_tahunan
+    santri.spp = update_spp
+    santri.kartu_keluarga = 'uploads/' + update_kartu_keluarga.filename
 
-    # db.session.add(santri)
+    db.session.add(santri)
     # db.session.commit()
 
     return redirect('/antrian')
 
 @app.route('/<id>/delete')
 def hapus_santri(id):
-    # santri = Pendaftaran.query.filter_by(id=id).first()
-    # db.session.delete(santri)
+    santri = Pendaftaran.query.filter_by(id=id).first()
+    db.session.delete(santri)
     # db.session.commit()
 
     return redirect('/antrian')
