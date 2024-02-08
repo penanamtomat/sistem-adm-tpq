@@ -11,14 +11,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 MONGODB_URI = os.getenv("URI_MONGODB")
 MONGODB_DB = os.getenv("DB_MONGODB")
 
 app = Flask(__name__)
 
-client = MongoClient("mongodb+srv://dimstomato:K4Cyaxqiv7zdfUvi@cluster09.keqktvo.mongodb.net/?retryWrites=true&w=majority")
-db_nosql = client.dbtpq
+client = MongoClient(MONGODB_URI)
+db_nosql = client[MONGODB_DB]
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TPQ Al-Baidhowi.db'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
