@@ -19,8 +19,8 @@ app = Flask(__name__)
 client = MongoClient(MONGODB_URI)
 db_nosql = client[MONGODB_DB]
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TPQ Al-Baidhowi.db'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TPQ Al-Baidhowi.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # instance sqlalchemy   
 db = SQLAlchemy(app)
