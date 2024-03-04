@@ -6,6 +6,29 @@
 /* #carouselExampleAutoplaying {
 } */
 
-body {
-  min-height: 2100px;
+/* body {
+  min-height: 1800px;
+} */
+
+#beranda {
+  min-height: 1800px;
+}
+
+#pendaftaran {
+  min-height: 1050px;
+}
+
+#antrian {
+  min-height: auto;
+}
+
+.btn {
+  background-color: #228b22;
+  color: white;
+  /* color: #228b22; */
+  width: 100px;
+}
+
+.navbar {
+  background-color: #228b22;
 }
