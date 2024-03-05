@@ -2,22 +2,22 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from werkzeug.utils import secure_filename
-from pymongo import MongoClient
+# from pymongo import MongoClient
 
 import os
-from os.path import dirname, join
-from bson.objectid import ObjectId
-from dotenv import load_dotenv
+# from os.path import dirname, join
+# from bson.objectid import ObjectId
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
-MONGODB_URI = os.getenv("URI_MONGODB")
-MONGODB_DB = os.getenv("DB_MONGODB")
+# MONGODB_URI = os.getenv("URI_MONGODB")
+# MONGODB_DB = os.getenv("DB_MONGODB")
 
 app = Flask(__name__)
 
-client = MongoClient(MONGODB_URI)
-db_nosql = client[MONGODB_DB]
+# client = MongoClient(MONGODB_URI)
+# db_nosql = client[MONGODB_DB]
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TPQ Al-Baidhowi.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -71,8 +71,9 @@ def dashboard():
 
 @app.route("/antrian")
 def antri():
-    list_santri = list(db_nosql.pendaftaran.find())
-    print(list_santri[0])
+    list_santri = Pendaftaran.query.all()
+    # list_santri = list(db_nosql.pendaftaran.find())
+    # print(list_santri[0])
     return render_template('antrian.html', santri = list_santri)
 
 @app.route("/pendaftaran")
@@ -81,6 +82,20 @@ def daftar():
 
 @app.route("/pendaftaran/save", methods=['POST'])
 def pendaftaran_save():
+    receive_nama = request.form['name']
+    receive_ttl = request.form['ttl']
+    receive_dadname = request.form['dadname']
+    receive_dadkerja = request.form['dadkerja']
+    receive_momname = request.form['momname']
+    receive_momkerja = request.form['momkerja']
+    receive_jenis_kelamin = request.form['jeniskelamin']
+    receive_jadwal = request.form['jadwal']
+    receive_no_hp = request.form['nohp']
+    receive_alamat = request.form['alamat']
+    receive_tahunan = request.form['tahunan']
+    receive_spp = request.form['spp']
+    receive_file = request.files['kartukeluarga']
+
 
     #menerima data dari request
     receive_nama = request.form.get('name')
@@ -117,22 +132,24 @@ def pendaftaran_save():
         santri.spp = receive_spp
         santri.kartu_keluarga = 'uploads/' + filename
 
-        santri = {
-            'nama': santri.nama,
-            'ttl': santri.ttl,
-            'ayah': santri.ayah,
-            'job_ayah': santri.job_ayah,
-            'ibu': santri.ibu,
-            'job_ibu': santri.job_ibu,
-            'jenis_kelamin': santri.jenis_kelamin,
-            'jadwal': santri.jadwal,
-            'no_hp': santri.no_hp,
-            'alamat': santri.alamat,
-            'tahunan': santri.tahunan,
-            'spp': santri.spp,
-            'kartu_keluarga': santri.kartu_keluarga
-        }
-        db_nosql.pendaftaran.insert_one(santri)
+        # santri = {
+        #     'nama': nama,
+        #     'ttl': ttl,
+        #     'ayah': ayah,
+        #     'job_ayah': job_ayah,
+        #     'ibu': ibu,
+        #     'job_ibu': job_ibu,
+        #     'jenis_kelamin': jenis_kelamin,
+        #     'jadwal': jadwal,
+        #     'no_hp': no_hp,
+        #     'alamat': alamat,
+        #     'tahunan': tahunan,
+        #     'spp': spp,
+        #     'kartu_keluarga': kartu_keluarga
+        # }
+        # db_nosql.pendaftaran.insert_one(santri)
+        db.session.add(santri)
+        db.session.commit()
 
         return redirect('/pendaftaran')
 
@@ -176,15 +193,18 @@ def save_update(id):
     santri.kartu_keluarga = 'uploads/' + update_kartu_keluarga.filename
 
     db.session.add(santri)
-    # db.session.commit()
+    db.session.commit()
 
     return redirect('/antrian')
 
 @app.route('/<id>/delete')
 def hapus_santri(id):
-    db_nosql.pendaftaran.delete_one(
-        {'_id':ObjectId(id)}
-    )
+    # hapus data
+    Pendaftaran.query.filter_by(id=id).delete()
+    db.session.commit()
+    # db_nosql.pendaftaran.delete_one(
+    #     {'_id':ObjectId(id)}
+    # )
 
     return redirect('/antrian')
 

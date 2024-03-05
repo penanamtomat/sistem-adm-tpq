@@ -10,7 +10,7 @@
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top" style="background-color: #228b22">
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top">
       <div class="container">
         <a class="navbar-brand" href="/antrian">Update Status Santri</a>
       </div>
@@ -70,7 +70,7 @@
       </div>
     </div> -->
     <div id="formulir" style="overflow: hidden">
-      <form action="/{{santri.id}}/update/save" method="POST" enctype="multipart/form-data">
+      <form action="/{{santri._id}}/update/save" method="POST" enctype="multipart/form-data">
         <div class="container">
           <div class="row mt-5">
             <div class="col mt-4">
@@ -210,7 +210,8 @@
               <br />
             </div>
           </div>
-          <button class="btn mt-3" style="background-color: #228b22; color: white; width: 100px" type="submit">Submit</button>
+          <!-- <button class="btn mt-3" style="background-color: #228b22; color: white; width: 100px" type="submit">Submit</button> -->
+          <button class="btn mt-3" type="submit">Submit</button>
         </div>
       </form>
     </div>
